@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "WPF_APP/1.0.0": {
+        "dependencies": {
+          "class_library": "1.0.0"
+        },
+        "runtime": {
+          "WPF_APP.dll": {}
+        }
+      },
+      "class_library/1.0.0": {
+        "runtime": {
+          "class_library.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WPF_APP/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "class_library/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

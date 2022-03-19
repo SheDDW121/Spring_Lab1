@@ -1,0 +1,166 @@
+﻿<Window x:Class="WPF_APP.MainWindow" Closing="Window_Closing"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_APP"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:zz="clr-namespace:class_library;assembly=class_library"
+        mc:Ignorable="d"
+        Title="class_library" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:ViewData></local:ViewData>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ObjectDataProvider x:Key="key_EnumVmf"
+                        ObjectType="{x:Type system:Enum}"
+                        MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="zz:VMf" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <local:MultiConverters x:Key="key_MultiConverters"></local:MultiConverters>
+        <local:Convert_Time x:Key="key_Convert_Time"></local:Convert_Time>
+        <local:Convert_Accur x:Key="key_Convert_Accur"></local:Convert_Accur>
+        <local:Display_Zero x:Key="key_Display_Zero"></local:Display_Zero>
+
+        <DataTemplate x:Key="Template_For_Common">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=Fun_Name}"></TextBlock>
+                <TextBlock Text=", Grid: "></TextBlock>
+                <TextBlock Text="{Binding Path=CurGrid.Length}"></TextBlock>
+                <TextBlock Text=" "></TextBlock>
+                <TextBlock Text="{Binding Path=CurGrid.Begin}"></TextBlock>
+                <TextBlock Text=" "></TextBlock>
+                <TextBlock Text="{Binding Path=CurGrid.End}"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+
+    </Window.Resources>
+
+
+    <Grid Name ="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Height="30" Width="95" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <MenuItem Header="File" Foreground="Black" FontSize="20">
+                <MenuItem Header="New" Click="New_Click"></MenuItem>
+                <MenuItem Header="Open" Click="Open_Click"></MenuItem>
+                <MenuItem Header="Save" Click="Save_Click"></MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="Edit" Foreground="Black" FontSize="20">
+                <MenuItem Header="Add VMTime" Click="Add_Time_Click"></MenuItem>
+                <MenuItem Header="Add VMAccuracy" Click="Add_Accur_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid Margin="128,0,205,10" Background="#FFFFCA84">
+            <TextBlock FontSize="20" Margin="19,7,247,56"><Run Text="Выберите функцию"/></TextBlock>
+            <ComboBox Grid.Row="0" Width ="200" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top"
+                      ItemsSource="{Binding Source={StaticResource key_EnumVmf}, Mode=OneTime}"
+                      SelectedItem ="{Binding Path=MFun, Mode=TwoWay}" SelectedIndex="0" Margin="0,9,19,0"/>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="20"
+                       Margin="19,49,0,0" Width="201">Длина;Начало;Конец</TextBlock>
+            <TextBox Name="ForInput" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="200" Margin="234,51,0,0">
+                <TextBox.Text>
+                    <MultiBinding Converter="{StaticResource key_MultiConverters}">
+                        <Binding Path="Length"></Binding>
+                        <Binding Path="Begin"></Binding>
+                        <Binding Path="End"></Binding>
+                    </MultiBinding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+
+        <Grid Name = "For_Times" Grid.Row="1" Width="295" Height="325" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#FFADEEA6">
+            <TextBlock Text="VMTime Elements" Margin="70,8,51,299" FontWeight="Bold" FontSize="16" FontStyle="Normal" TextDecorations="{x:Null}"></TextBlock>
+            <ListBox Name ="TimeList" Width="258" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"
+                     Margin="0,34,0,0"
+                     ItemsSource="{Binding}" ItemTemplate="{StaticResource Template_For_Common}">
+            </ListBox>
+
+            <TextBlock Width="258" Height="155" HorizontalAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap" 
+                     Margin="0,150,0,0" Background="White" DataContext="{Binding ElementName=TimeList, Path=SelectedItem}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource key_Convert_Time}">
+                        <Binding Path="Time_HA"></Binding>
+                        <Binding Path="Time_EP"></Binding>
+                        <Binding Path="Time_NO_MKL"></Binding>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </Grid>
+
+
+        <Grid Name = "For_Accuracy" Grid.Row="1" Width="295
+              " Height="325" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="300,0,0,0" Background="#FF7EC6EB">
+
+            <TextBlock Text="VMAccuracy Elements" Margin="65,8,37,296" FontWeight="Bold" FontSize="16" FontStyle="Normal" TextDecorations="{x:Null}"></TextBlock>
+            <ListBox Name ="AccurList" Width ="258" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top"
+                     Margin="0,34,0,0"
+                     ItemsSource="{Binding}" ItemTemplate="{StaticResource Template_For_Common}">
+            </ListBox>
+
+            <TextBlock Width="258" Height="154" HorizontalAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap"
+                     Margin="0,150,0,0" Background="White" DataContext="{Binding ElementName = AccurList, Path = SelectedItem}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{StaticResource key_Convert_Accur}">
+                        <Binding Path="MAX_DIFF_HA_AND_EP"></Binding>
+                        <Binding Path="ARG_FOR_MAX_DIFF[0]"></Binding>
+                        <Binding Path="ARG_FOR_MAX_DIFF[1]"></Binding>
+                        <Binding Path="ARG_FOR_MAX_DIFF[2]"></Binding>
+                    </MultiBinding>
+                </TextBlock.Text>
+
+            </TextBlock>
+        </Grid>
+
+
+        <Grid Grid.Row="0" Width="190" HorizontalAlignment="Right">
+            <TextBlock></TextBlock>
+        </Grid>
+        <Grid Name ="Additional_Items" Grid.Row="1" Width="185" Height="200" HorizontalAlignment="Right" Background="LightPink">
+            <StackPanel>
+                <TextBlock Text="VMBenchmark properties" FontWeight="Bold" FontSize="15"></TextBlock>
+                <StackPanel>
+                    <TextBlock Text="Max time relation HA / NO_MKL" FontStyle="Italic" FontWeight="Bold"></TextBlock>
+                    <TextBlock TextWrapping="Wrap" Background="White"
+                               Width="160">
+                        <TextBlock.Text>
+                            <Binding Converter="{StaticResource key_Display_Zero}" Path="BM.MAX_MKL_HA_TO_NO_MKL"> </Binding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+                <TextBlock Height="35"></TextBlock>
+                <TextBlock Text="Min time relation HA / NO_MKL" FontWeight="Bold" FontSize="12" FontStyle="Italic"/>
+                <TextBlock TextWrapping="Wrap" Width="160" Background="White">
+                    <TextBlock.Text>
+                        <Binding Converter="{StaticResource key_Display_Zero}" Path="BM.MIN_MKL_HA_TO_NO_MKL"> </Binding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Height="35"></TextBlock>
+                <TextBlock Text="Min time relation EP / NO_MKL" FontWeight="Bold" FontSize="12" FontStyle="Italic"/>
+                <TextBlock TextWrapping="Wrap" Width="160" Background="White">
+                    <TextBlock.Text>
+                        <Binding Converter="{StaticResource key_Display_Zero}" Path="BM.MIN_MKL_EP_TO_NO_MKL"></Binding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Width="185" Background="MediumPurple" Margin="0, 25, 0, 28">
+            <TextBlock Text="ViewData was changed?" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Width="80" Background="White" Height="20">
+                <TextBlock.Text>
+                    <Binding Path="WasChanged"> </Binding>
+                </TextBlock.Text>
+            </TextBlock>
+            
+        </StackPanel>
+    </Grid>
+</Window>
