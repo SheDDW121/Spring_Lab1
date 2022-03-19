@@ -1,0 +1,12 @@
+E:\VisualStudio\Projects\class_library\class_library\obj\Debug\net5.0\class_library.csproj.AssemblyReference.cache
+E:\VisualStudio\Projects\class_library\class_library\obj\Debug\net5.0\class_library.GeneratedMSBuildEditorConfig.editorconfig
+E:\VisualStudio\Projects\class_library\class_library\obj\Debug\net5.0\class_library.AssemblyInfoInputs.cache
+E:\VisualStudio\Projects\class_library\class_library\obj\Debug\net5.0\class_library.AssemblyInfo.cs
+E:\VisualStudio\Projects\class_library\class_library\obj\Debug\net5.0\class_library.csproj.CoreCompileInputs.cache
+E:\VisualStudio\Projects\class_library\class_library\bin\Debug\net5.0\class_library.deps.json
+E:\VisualStudio\Projects\class_library\class_library\bin\Debug\net5.0\class_library.dll
+E:\VisualStudio\Projects\class_library\class_library\bin\Debug\net5.0\ref\class_library.dll
+E:\VisualStudio\Projects\class_library\class_library\bin\Debug\net5.0\class_library.pdb
+E:\VisualStudio\Projects\class_library\class_library\obj\Debug\net5.0\class_library.dll
+E:\VisualStudio\Projects\class_library\class_library\obj\Debug\net5.0\ref\class_library.dll
+E:\VisualStudio\Projects\class_library\class_library\obj\Debug\net5.0\class_library.pdb

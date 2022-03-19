@@ -1,0 +1,7 @@
+﻿E:\VisualStudio\Main\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (Dll_library.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  Dll_Lib.cpp
+E:\VisualStudio\Projects\class_library\Dll_library\Dll_Lib.cpp(73,1): warning C4297: Get_MKL_TIMES: ожидается, что функция не будет выдавать исключения, но она это делает
+E:\VisualStudio\Projects\class_library\Dll_library\Dll_Lib.cpp(73,1): message : Функция типа extern "C", указан параметр /EHc
+E:\VisualStudio\Projects\class_library\Dll_library\Dll_Lib.cpp(105,1): warning C4297: Get_MKL_ACCUR: ожидается, что функция не будет выдавать исключения, но она это делает
+E:\VisualStudio\Projects\class_library\Dll_library\Dll_Lib.cpp(105,1): message : Функция типа extern "C", указан параметр /EHc
+  Dll_library.vcxproj -> E:\VisualStudio\Projects\class_library\x64\Debug\Dll_Lib.dll
